@@ -1,5 +1,6 @@
 package ge.workshops.workshop1.services;
 
+import ge.workshops.workshop1.entities.Post;
 import ge.workshops.workshop1.entities.User;
 import ge.workshops.workshop1.entities.UserSearchParams;
 import ge.workshops.workshop1.exceptions.NotFoundException;
@@ -37,6 +38,12 @@ public class UserServiceImpl implements UserService {
     public void delete(int id) {
         userRepository.deleteById(id);
     }
+
+    public User getUserPosts(int id) {
+        return null;
+    }
+
+    //პოსტების ძებნა დავამატო user_id-თი
 
     public User getUser(int id) {
         if (id < 1) {

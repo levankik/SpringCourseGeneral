@@ -5,6 +5,7 @@ import ge.workshops.workshop1.entities.PostSearchParams;
 import java.security.InvalidParameterException;
 import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repositories.PostRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 
@@ -18,10 +19,14 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
-    public List<Post> getAll (PostSearchParams searchParams)
-    {
+    public List<Post> getAll (PostSearchParams searchParams)  {
         return postRepository.findAll();
     }
+
+   // @Query("select c from Post c where c.user_id = id")
+   // public List<Post> getPostsByUser_id(int id) {
+   //     return postRepository.findAll();
+   // };
 
     public Post add(Post post) {
         post.setId(null);

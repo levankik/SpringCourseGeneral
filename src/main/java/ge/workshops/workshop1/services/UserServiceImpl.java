@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
 
     public User getUserPosts(int id) {
         return null;
-    }
+    } //პოსტების ძებნა დავამატო user_id-თი
 
-    //პოსტების ძებნა დავამატო user_id-თი
+
 
     public User getUser(int id) {
         if (id < 1) {

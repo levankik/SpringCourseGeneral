@@ -18,7 +18,8 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
-    public List<Post> getAll (PostSearchParams searchParams) {
+    public List<Post> getAll (PostSearchParams searchParams)
+    {
         return postRepository.findAll();
     }
 

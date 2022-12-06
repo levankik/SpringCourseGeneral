@@ -1,14 +1,15 @@
 package ge.workshops.workshop1.services;
 
-import ge.workshops.workshop1.entities.Post;
 import ge.workshops.workshop1.entities.User;
 import ge.workshops.workshop1.entities.UserSearchParams;
 import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repositories.UserRepository;
-import java.security.InvalidParameterException;
+import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 

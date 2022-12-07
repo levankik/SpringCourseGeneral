@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "Users")
-
+@Table(name = "users")
+@SequenceGenerator(name = "userIdGenerator", sequenceName = "users_id_seq", allocationSize = 1)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userIdGenerator")
@@ -19,7 +19,13 @@ public class User {
     private String password;
     @Column(name = "email")
     private String email;
-    @Column(name = "create_date")
+    @Column(name = "create_date") //insertable = false, updatable = false
     private LocalDateTime create_date;
     private Boolean active;
+
+  //  @PrePersist
+   // private void prePersist() {
+    //    active = true;
+    //    create_date = LocalDateTime.now();
+    //}
 }

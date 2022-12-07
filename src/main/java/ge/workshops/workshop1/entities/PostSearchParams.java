@@ -1,10 +1,10 @@
 package ge.workshops.workshop1.entities;
 
 import lombok.Data;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class PostSearchParams {
@@ -13,5 +13,5 @@ public class PostSearchParams {
     private String body;
     private String user_id;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate create_date;
+    private LocalDateTime create_date;
 }

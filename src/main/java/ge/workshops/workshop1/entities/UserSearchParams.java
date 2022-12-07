@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class UserSearchParams {
@@ -11,7 +12,7 @@ public class UserSearchParams {
     private String password;
     private String email;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate create_date;
+    private LocalDateTime create_date;
     private boolean active;
 }
 

@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public User add(User user) {
-        user.setId(null);
+    public  User add(User user) {
+        user.setActive(true);
         return userRepository.save(user);
     }
 

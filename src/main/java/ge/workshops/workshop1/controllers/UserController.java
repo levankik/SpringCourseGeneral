@@ -15,16 +15,19 @@ public class UserController {
     private final UserService userService;
 
     public UserController(UserService userService) {
+
         this.userService = userService;
     }
 
     @GetMapping()
     public List<User> getAll(UserSearchParams searchParams) {
+
         return userService.getAll(searchParams);
     }
 
     @GetMapping("/{id}")
     public User getById(@PathVariable int id) {
+
         return userService.getUser(id);
     }
 
@@ -37,7 +40,14 @@ public class UserController {
 
     @PutMapping("/{id}")
     public User update(@RequestBody User user, @PathVariable int id) {
+
         return userService.update(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> delete(@PathVariable int id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
 

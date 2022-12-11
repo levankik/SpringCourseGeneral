@@ -3,7 +3,7 @@ package ge.workshops.workshop1.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -20,6 +20,6 @@ public class Post {
     @Column(name = "user_id")
     private Integer user_id;
     @Column(name = "create_date")
-    private LocalDateTime create_date;
+    private LocalDate create_date;
 }
 

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class PostSearchParams {
-    private int id;
     private String title;
     private String body;
     private String user_id;

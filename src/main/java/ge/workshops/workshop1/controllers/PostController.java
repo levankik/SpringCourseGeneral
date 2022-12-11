@@ -17,16 +17,19 @@ public class PostController {
     private final PostService postService;
 
     public PostController(PostService postService) {
+
         this.postService = postService;
     }
 
     @GetMapping()
-    public List<Post> getAll(PostSearchParams searchParams) {
+    public List<Post> getAll(PostSearchParams searchParams)
+    {
         return postService.getAll(searchParams);
     }
 
     @GetMapping("/{id}")
-    public Post getById(@PathVariable int id) {
+    public Post getById(@PathVariable int id)
+    {
         return postService.getPost(id);
     }
 
@@ -39,6 +42,13 @@ public class PostController {
 
     @PutMapping("/{id}")
     public Post update(@RequestBody Post post, @PathVariable int id) {
+
         return postService.update(id, post);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Post> delete(@PathVariable int id) {
+        postService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

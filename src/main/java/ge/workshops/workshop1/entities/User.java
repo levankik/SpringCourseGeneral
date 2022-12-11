@@ -3,7 +3,7 @@ package ge.workshops.workshop1.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -20,7 +20,7 @@ public class User {
     @Column(name = "email")
     private String email;
     @Column(name = "create_date") //insertable = false, updatable = false
-    private LocalDateTime create_date;
+    private LocalDate create_date;
     private Boolean active;
 
   //  @PrePersist

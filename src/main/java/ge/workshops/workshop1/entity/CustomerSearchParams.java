@@ -1,4 +1,4 @@
-package ge.workshops.workshop1.entities;
+package ge.workshops.workshop1.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -6,10 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Data
-public class UserSearchParams {
-    private String username;
-    private String email;
+public class CustomerSearchParams {
+    private String firstName;
+    private String lastName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate create_date;
+    private LocalDate birthDate;
 }
-

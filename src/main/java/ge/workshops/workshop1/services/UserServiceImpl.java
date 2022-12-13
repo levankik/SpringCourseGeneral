@@ -1,12 +1,10 @@
 package ge.workshops.workshop1.services;
 
-import ge.workshops.workshop1.entities.User;
-import ge.workshops.workshop1.entities.UserSearchParams;
 import ge.workshops.workshop1.exceptions.NotFoundException;
-import ge.workshops.workshop1.repositories.UserRepository;
+import ge.workshops.workshop1.repository.UserRepository;
+import ge.workshops.workshop1.entity.User;
 import org.springframework.stereotype.Service;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 @Service
@@ -14,47 +12,23 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
-
         this.userRepository = userRepository;
     }
 
-    public List<User> getAll (UserSearchParams searchParams) {
-
+    @Override
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public  User add(User user) {
-        user.setActive(true);
-        return userRepository.save(user);
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findById(id)
+                .orElseThrow (() -> new NotFoundException("User not found"));
     }
 
-    public User update(int id, User user) {
-        var foundUser = getUser(id);
-        foundUser.setUsername(user.getUsername());
-        foundUser.setPassword(user.getPassword());
-        foundUser.setEmail(user.getEmail());
-        foundUser.setCreate_date(user.getCreate_date());
-        foundUser.setActive(user.getActive());
-        return userRepository.save(foundUser);
-    }
-
-    public void delete(int id) {
-        userRepository.deleteById(id);
-    }
-
-    public User getUserPosts(int id) {
-        return null;
-    } //პოსტების ძებნა დავამატო user_id-თი
-
-
-
-    public User getUser(int id) {
-        if (id < 1) {
-            throw new InvalidParameterException("Id must be positive integer");
-        }
-        return  userRepository.findById(id)
+    @Override
+    public User getUserByUserName(String username) {
+        return userRepository.findByUserName(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-
     }
-
 }

@@ -1,11 +1,10 @@
 package ge.workshops.workshop1.services;
 
-import ge.workshops.workshop1.entities.Post;
-import ge.workshops.workshop1.entities.PostSearchParams;
+import ge.workshops.workshop1.repository.PostRepository;
+import ge.workshops.workshop1.entity.Post;
 import ge.workshops.workshop1.exceptions.NotFoundException;
-import ge.workshops.workshop1.repositories.PostRepository;
 import org.springframework.stereotype.Service;
-import java.security.InvalidParameterException;
+
 import java.util.List;
 
 @Service
@@ -16,32 +15,19 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
-    public List<Post> getAll (PostSearchParams searchParams)  {
+    @Override
+    public List<Post> getPosts() {
         return postRepository.findAll();
     }
 
-    public Post add(Post post) {
-        return postRepository.save(post);
-    }
-
-    public Post update(int id, Post post) {
-        var foundPost = getPost(id);
-        foundPost.setTitle(post.getTitle());
-        foundPost.setBody(post.getBody());
-        foundPost.setUser_id(post.getUser_id());
-        foundPost.setCreate_date(post.getCreate_date());
-        return postRepository.save(foundPost);
-    }
-
-    public void delete(int id) {
-        postRepository.deleteById(id);
-    }
-
+    @Override
     public Post getPost(int id) {
-        if (id < 1) {
-            throw new InvalidParameterException("Id must be positive integer");
-        }
-        return  postRepository.findById(id)
+        return postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Post not found"));
+    }
+
+    @Override
+    public List<Post> getPostsById(int userId) {
+        return postRepository.findByUserId(userId);
     }
 }

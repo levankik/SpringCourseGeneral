@@ -8,7 +8,7 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ge.softgen.softlab</groupId>
+    <groupId> ge.softgen.softlab</groupId>
     <artifactId>spring-boot-tutorial</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-tutorial</name>

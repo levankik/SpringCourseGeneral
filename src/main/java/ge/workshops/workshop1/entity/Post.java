@@ -22,7 +22,7 @@ public class Post {
 
 
     @Column(name = "create_date",  updatable = false)
-    private LocalDateTime createDate;
+    private  LocalDateTime createDate;
 
 
     @ManyToOne

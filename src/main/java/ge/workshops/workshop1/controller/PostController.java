@@ -22,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping("")
-    public Page<Post> getPosts(@RequestParam(required = false, defaultValue = "0") int page,
+    public Page<Post>  getPosts(@RequestParam(required = false, defaultValue = "0") int page,
                                @RequestParam(required = false, defaultValue = "10") int size,
                                @RequestParam(required = false, defaultValue = "DESC") Sort.Direction direction,
                                @RequestParam(required = false, defaultValue = "id") String field) {

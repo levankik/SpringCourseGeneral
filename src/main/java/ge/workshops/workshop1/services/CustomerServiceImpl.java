@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-    public Customer add(Customer customer) {
+    public  Customer add(Customer customer) {
         customer.setId(null);
         customer.setDeleted(false);
         return customerRepository.save(customer);

@@ -10,7 +10,7 @@ import java.util.List;
 public interface PostService {
     Page<Post> getPosts(Pageable pageable);
 
-    Post getPost(int id);
+    Post  getPost(int id);
 
     List<Post> getPostsById(int userId);
 

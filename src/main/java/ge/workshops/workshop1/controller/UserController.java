@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id) throws InterruptedException {
+    public User  getUser(@PathVariable int id) throws InterruptedException {
         var user = userService.getUserById(id);
         Thread.sleep(5000);
         var posts = user.getPosts();

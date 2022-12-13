@@ -31,7 +31,7 @@ public class User {
     private LocalDateTime createDate;
 
     @Column(name = "active")
-    private boolean active;
+    private  boolean active;
 
     @JsonIgnore
     @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)

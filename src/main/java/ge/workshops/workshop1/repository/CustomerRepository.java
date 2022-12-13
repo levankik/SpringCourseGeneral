@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select c from Customer c where c.deleted = false")
-    List<Customer> findActive();
+    List<Customer>  findActive();
 }
 

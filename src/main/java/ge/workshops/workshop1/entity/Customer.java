@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerIdGenerator")
-    private Integer id;
+    private  Integer id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

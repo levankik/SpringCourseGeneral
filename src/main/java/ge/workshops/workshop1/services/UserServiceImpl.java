@@ -31,4 +31,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserName(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
+
+    @Override
+    public User addUser(User user) {
+        //user.setId(null); ვანოს აქ დაკომენტარებული არ აქვს.
+        return userRepository.save(user);
+    }
 }

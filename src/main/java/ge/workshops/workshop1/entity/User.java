@@ -1,6 +1,8 @@
 package ge.workshops.workshop1.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,14 +27,19 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "create_date")
+    @Column(name = "create_date", updatable = false)
     private LocalDateTime createDate;
 
     @Column(name = "active")
     private boolean active;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
     private List<Post> posts;
 
+    @PrePersist
+    public void prePersist() {
+        createDate = LocalDateTime.now();
+        active = true;
+    }
 }

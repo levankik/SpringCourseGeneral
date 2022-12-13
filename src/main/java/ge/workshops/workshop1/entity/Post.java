@@ -1,6 +1,6 @@
 package ge.workshops.workshop1.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,14 +20,17 @@ public class Post {
     @Column(name = "body")
     private String body;
 
-    @Column(name = "user_id")
-    private Integer userId;
 
-    @Column(name = "create_date")
+    @Column(name = "create_date",  updatable = false)
     private LocalDateTime createDate;
 
-    @JsonManagedReference
+
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id",  updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        createDate = LocalDateTime.now();
+    }
 }

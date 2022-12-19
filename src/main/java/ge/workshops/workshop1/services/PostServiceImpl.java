@@ -1,14 +1,18 @@
 package ge.workshops.workshop1.services;
 
-import ge.workshops.workshop1.repository.PostRepository;
+import ge.workshops.workshop1.dto.PostSearchParams;
 import ge.workshops.workshop1.entity.Post;
+import ge.workshops.workshop1.entity.User;
 import ge.workshops.workshop1.exceptions.NotFoundException;
+import ge.workshops.workshop1.repository.PostRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 @Service
@@ -16,15 +20,46 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserService userService;
 
-    public PostServiceImpl(PostRepository postRepository, UserService userService) {
+    public PostServiceImpl(PostRepository postRepository,
+                           UserService userService) {
         this.postRepository = postRepository;
 
         this.userService = userService;
     }
 
     @Override
-    public Page<Post> getPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    public Page<Post> getPosts(PostSearchParams params, Pageable pageable) {
+        return postRepository.findAll( ((root, query, cb) -> {
+            // 1 = 1
+            Predicate predicate = cb.conjunction();
+            // and id = :id
+            if(params.getId() != null) {
+                predicate = cb.and(predicate, cb.equal(root.get("id"), params.getId()));
+            }
+            if(StringUtils.isNotEmpty(params.getTitle())) {
+                // and title like '%:title%'
+                predicate = cb.and(predicate, cb.like(root.get("title"), '%' + params.getTitle() + '%'));
+            }
+            if(StringUtils.isNotEmpty(params.getBody())) {
+                // and body like '%:body%'
+                predicate = cb.and(predicate, cb.like(root.get("body"), '%' + params.getBody() + '%'));
+            }
+            if(params.getCreateDateFrom() != null) {
+                // and createDate like >= :createDate%
+                var createDateFrom = params.getCreateDateFrom().atStartOfDay();
+                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get(Post_), createDateFrom));
+            }
+            if(params.getCreateDateTo() != null) {
+                // and createDate like <= :createDate%
+                var createDateTo = params.getCreateDateTo().atTime(23, 59, 59);
+                predicate = cb.and(predicate, cb.lessThanOrEqualTo(root.get("createDate"), createDateTo));
+            }
+            if(StringUtils.isNotEmpty(params.getUsername())) {
+                Join<Post, User> user = root.join("user", JoinType.LEFT);
+                predicate = cb.and(predicate, cb.like(user.get("username"), params.getUsername() + '%'));
+            }
+            return  predicate;
+        }), pageable);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ge.workshops.workshop1.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,10 +19,8 @@ public class Post {
     @Column(name = "body")
     private String body;
 
-
     @Column(name = "create_date",  updatable = false)
     private  LocalDateTime createDate;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

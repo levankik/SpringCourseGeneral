@@ -1,4 +1,4 @@
-package ge.workshops.workshop1.entity;
+package ge.workshops.workshop1.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;

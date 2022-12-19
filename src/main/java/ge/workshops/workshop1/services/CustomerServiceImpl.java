@@ -1,7 +1,7 @@
 package ge.workshops.workshop1.services;
 
 
-import ge.workshops.workshop1.entity.CustomerSearchParams;
+import ge.workshops.workshop1.dto.CustomerSearchParams;
 import ge.workshops.workshop1.exceptions.InvalidParameterException;
 import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repository.CustomerRepository;

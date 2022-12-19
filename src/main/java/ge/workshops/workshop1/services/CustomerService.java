@@ -1,6 +1,6 @@
 package ge.workshops.workshop1.services;
 
-import ge.workshops.workshop1.entity.CustomerSearchParams;
+import ge.workshops.workshop1.dto.CustomerSearchParams;
 import ge.workshops.workshop1.entity.Customer;
 
 import java.util.List;

@@ -1,16 +1,14 @@
 package ge.workshops.workshop1.controller;
 
-import ge.workshops.workshop1.services.PostService;
+import ge.workshops.workshop1.dto.PostSearchParams;
 import ge.workshops.workshop1.entity.Post;
+import ge.workshops.workshop1.services.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -23,11 +21,13 @@ public class PostController {
 
     @GetMapping("")
     public Page<Post>  getPosts(@RequestParam(required = false, defaultValue = "0") int page,
-                               @RequestParam(required = false, defaultValue = "10") int size,
-                               @RequestParam(required = false, defaultValue = "DESC") Sort.Direction direction,
-                               @RequestParam(required = false, defaultValue = "id") String field) {
+                                @RequestParam(required = false, defaultValue = "10") int size,
+                                @RequestParam(required = false, defaultValue = "DESC") Sort.Direction direction,
+                                @RequestParam(required = false, defaultValue = "id") String field,
+                                PostSearchParams params) {
+        System.out.println(params.getTitle());
         Sort sorter = Sort.by(direction, field);
-        return postService.getPosts(PageRequest.of(page, size, sorter));
+        return postService.getPosts(params, PageRequest.of(page, size, sorter));
     }
 
     @GetMapping("/{id}")

@@ -1,7 +1,7 @@
 package ge.workshops.workshop1.services;
 
 
-import ge.workshops.workshop1.dto.CustomerSearchParams;
+import ge.workshops.workshop1.dto.CustomerDto;
 import ge.workshops.workshop1.exceptions.InvalidParameterException;
 import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repository.CustomerRepository;
@@ -19,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-    public List<Customer> getAll (CustomerSearchParams searchParams) {
+    public List<Customer> getAll (CustomerDto searchParams) {
         return customerRepository.findActive();
         //String firstName = searchParams.getFirstName();
         //String lastName = searchParams.getLastName();
@@ -40,7 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     public  Customer add(Customer customer) {
         customer.setId(null);
-        customer.setDeleted(false);
         return customerRepository.save(customer);
     }
 
@@ -55,7 +54,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     public void delete(int id) {
         var foundCustomer = getCustomer(id);
-        foundCustomer.setDeleted(true);
         customerRepository.save(foundCustomer);
     }
 

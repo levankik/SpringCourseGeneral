@@ -2,7 +2,7 @@ package ge.workshops.workshop1.controller;
 
 
 
-import ge.workshops.workshop1.dto.CustomerSearchParams;
+import ge.workshops.workshop1.dto.CustomerDto;
 import ge.workshops.workshop1.services.CustomerService;
 import ge.workshops.workshop1.entity.Customer;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public List<Customer> getAll(CustomerSearchParams searchParams) {
+    public List<Customer> getAll(CustomerDto searchParams) {
 
         return customerService.getAll(searchParams);
     }

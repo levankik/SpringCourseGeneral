@@ -40,6 +40,11 @@ public class PostController {
         postService.addPost(post);
         var location = UriComponentsBuilder.fromPath("/posts/" + post.getId()).build().toUri();
         return ResponseEntity.created(location).body(post);
+    }
 
+    @PostMapping("/process")
+    public ResponseEntity<Integer> startProcessing() {
+        postService.startProcessing();
+        return ResponseEntity.ok(1);
     }
 }

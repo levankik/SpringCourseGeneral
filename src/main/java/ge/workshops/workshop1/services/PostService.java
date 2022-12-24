@@ -16,4 +16,6 @@ public interface PostService {
     List<Post> getPostsById(int userId);
 
     Post addPost(Post post);
+
+    void startProcessing();
 }

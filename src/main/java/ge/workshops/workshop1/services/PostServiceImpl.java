@@ -8,7 +8,11 @@ import ge.workshops.workshop1.repository.PostRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -28,6 +32,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    //@Transactional(readOnly = true)
     public Page<Post> getPosts(PostSearchParams params, Pageable pageable) {
         return postRepository.findAll( ((root, query, cb) -> {
             // 1 = 1
@@ -47,7 +52,7 @@ public class PostServiceImpl implements PostService {
             if(params.getCreateDateFrom() != null) {
                 // and createDate like >= :createDate%
                 var createDateFrom = params.getCreateDateFrom().atStartOfDay();
-                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get(Post_), createDateFrom));
+                predicate = cb.and(predicate, cb.greaterThanOrEqualTo(root.get("Post_"), createDateFrom));
             }
             if(params.getCreateDateTo() != null) {
                 // and createDate like <= :createDate%
@@ -74,13 +79,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public Post addPost(Post post) {
         post.setId(null);
         if(post.getUser().getId() != 0) {
+            System.out.println("creating new user: " + post.getUser().getUserName());
             userService.addUser(post.getUser());
         }
         userService.addUser(post.getUser());
         return postRepository.save(post);
+    }
 
+    @Override
+    @Async
+    public void  startProcessing() {
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("processing finished");
+    }
+
+    @Scheduled(initialDelay = 30, fixedRate = 10_000_00)
+    public void scheduled() {
+        System.out.println("it should be logged in every 10000 seconds");
     }
 }

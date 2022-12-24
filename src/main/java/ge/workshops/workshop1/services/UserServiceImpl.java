@@ -4,6 +4,8 @@ import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repository.UserRepository;
 import ge.workshops.workshop1.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,8 +35,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public User addUser(User user) {
-        //user.setId(null); ვანოს აქ დაკომენტარებული არ აქვს.
+        // user.setId(null); ვანოს აქ  არ აქვს დაკომენტარებული, ჩემთან არ მუშაობს.
         return userRepository.save(user);
     }
 }

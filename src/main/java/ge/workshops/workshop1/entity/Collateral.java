@@ -3,7 +3,6 @@ package ge.workshops.workshop1.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,11 +16,11 @@ public class Collateral {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "collateralIdGenerator")
-    private  Integer id;
+    private int id;
     @Column(name = "type")
     private  CollateralType type;
-    @Column(name = "value")
-    private  float value;
+    @Column(name = "price")
+    private float price;
     @Column(name = "created_at")
     private LocalDateTime created_at;
     @Column(name = "updated_at")
@@ -30,5 +29,4 @@ public class Collateral {
     @ManyToOne
     @JoinColumn(name = "loan_id", referencedColumnName = "id")
     private Loan loan;
-
 }

@@ -30,7 +30,7 @@ public class Customer {
     private LocalDateTime updated_at;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "customer")
+    @OneToMany (mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Loan> loans;
 }
 

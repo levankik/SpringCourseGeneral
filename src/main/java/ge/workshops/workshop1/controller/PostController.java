@@ -47,4 +47,11 @@ public class PostController {
         postService.startProcessing();
         return ResponseEntity.ok(1);
     }
+
+    @PostMapping("/fill")
+    public ResponseEntity<Void> fillPostsFromJsonplaceholder() {
+        postService.fill();
+        var location = UriComponentsBuilder.fromPath("/posts/").build().toUri();
+        return ResponseEntity.created(location).build();
+    }
 }

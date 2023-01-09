@@ -1,7 +1,5 @@
 package ge.workshops.workshop1.controller;
 
-
-
 import ge.workshops.workshop1.dto.CustomerDto;
 import ge.workshops.workshop1.services.CustomerService;
 import ge.workshops.workshop1.entity.Customer;
@@ -25,13 +23,11 @@ public class CustomerController {
 
     @GetMapping()
     public List<Customer> getAll(CustomerDto searchParams) {
-
         return customerService.getAll(searchParams);
     }
 
     @GetMapping("/{id}")
     public Customer getById(@PathVariable int id) {
-
         return customerService.getCustomer(id);
     }
 

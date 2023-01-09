@@ -1,13 +1,17 @@
 package ge.workshops.workshop1;
 
+import ge.workshops.workshop1.config.JSONPlaceholderProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableScheduling
 @EnableAsync
+@EnableConfigurationProperties({
+        JSONPlaceholderProperties.class
+})
 @SpringBootApplication
 public class  Workshop1Application {
 

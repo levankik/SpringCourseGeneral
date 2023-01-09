@@ -21,6 +21,7 @@ public class UserController {
         this.userService = userService;
         this.postService = postService;
     }
+
     @GetMapping("")
     public List<User> getUsers() { return userService.getUsers();
     }

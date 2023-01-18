@@ -20,7 +20,7 @@ import java.util.List;
 public class Customer {
 
     public Customer(LoanRegistrationDto.Customer dto) {
-        this.privateNumber = dto.getPrivate_number();
+        this.privateNumber = dto.getPrivateNumber();
         this.firstName = dto.getFirstName();
         this.lastName = dto.getLastName();
         this.birthDate = dto.getBirthDate();

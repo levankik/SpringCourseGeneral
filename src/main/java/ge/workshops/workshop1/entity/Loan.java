@@ -1,6 +1,5 @@
 package ge.workshops.workshop1.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import ge.workshops.workshop1.dto.LoanRegistrationDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,8 @@ public class Loan {
             throw new IllegalArgumentException("loan is null");
         }
         this.amount = dto.getAmount();
-        this.interestRate = dto.getInterest_rate();
-        this.loanNumber = dto.getLoan_number();
+        this.interestRate = dto.getInterestRate();
+        this.loanNumber = dto.getLoanNumber();
         this.term = dto.getTerm();
     }
 

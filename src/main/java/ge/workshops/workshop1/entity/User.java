@@ -1,6 +1,7 @@
 package ge.workshops.workshop1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -37,7 +39,7 @@ public class User {
     private LocalDateTime createDate;
 
     @Column(name = "active")
-    private  boolean active;
+    private Boolean active;
 
     @JsonIgnore
     @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
@@ -48,4 +50,5 @@ public class User {
         createDate = LocalDateTime.now();
         active = true;
     }
+
 }

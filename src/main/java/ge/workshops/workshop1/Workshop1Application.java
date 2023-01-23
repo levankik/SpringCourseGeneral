@@ -14,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 })
 @SpringBootApplication
 public class  Workshop1Application {
-
     public  static void main(String[] args) {
         SpringApplication.run(Workshop1Application.class, args);
     }

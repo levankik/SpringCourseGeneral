@@ -69,9 +69,8 @@ public class LoanServiceImpl implements LoanService {
         return loanRepository.findById(id).orElseThrow(() -> new NotFoundException("Loan not found"));
     }
 
-    @Scheduled (fixedRate = 60 * 1000)
+    @Scheduled (fixedRate = 1 * 1000)
     public void calculateInterest() {
-
         loanRepository.findAll().forEach(loan -> updateInterest(loan, LocalDateTime.now()));
     }
 

@@ -6,26 +6,25 @@ import ge.workshops.workshop1.entity.User;
 import ge.workshops.workshop1.services.PostService;
 import ge.workshops.workshop1.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PrePersist;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('USER_READ')")
 public class UserController {
     private final UserService userService;
     private final PostService postService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("")
-    public List<User> getUsers() { return userService.getUsers();
-    }
+    public List<User> getUsers() { return userService.getUsers();}
 
     @GetMapping("/current")
     public SecUser getCurrentUser(@AuthenticationPrincipal SecUser secUser) {
@@ -36,6 +35,12 @@ public class UserController {
     public User  getUser(@PathVariable int id)  {
         System.out.println(passwordEncoder.encode("nata"));
         return userService.getUserById(id);
+    }
+
+    @PostMapping("")
+    @PreAuthorize("hasAuthority('USER_ADD')")
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @GetMapping("/{id}/posts")

@@ -42,8 +42,16 @@ public class User {
     private Boolean active;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "user") //fetch = FetchType.EAGER მეწერა აქ.
     private List<Post> posts;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_permissions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private  List<Permission> permissions;
 
     @PrePersist
     public void prePersist() {

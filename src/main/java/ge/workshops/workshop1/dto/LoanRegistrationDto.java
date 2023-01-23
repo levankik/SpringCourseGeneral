@@ -36,7 +36,7 @@ public class LoanRegistrationDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Loan {
-        @NotBlank
+        @NotNull
         private String loanNumber;
         @NotNull
         @Min(100)
@@ -53,7 +53,7 @@ public class LoanRegistrationDto {
     @Setter
     @AllArgsConstructor
     public static class Customer {
-        @NotBlank
+        @NotNull
         private String privateNumber;
         private String firstName;
         private String lastName;

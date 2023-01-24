@@ -1,0 +1,7 @@
+target
+Dockerfile
+HELP.md
+docker-compose.yml
+.idea
+.fleet
+.gitignore

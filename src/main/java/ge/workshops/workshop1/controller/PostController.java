@@ -3,13 +3,16 @@ package ge.workshops.workshop1.controller;
 import ge.workshops.workshop1.dto.PostSearchParams;
 import ge.workshops.workshop1.entity.Post;
 import ge.workshops.workshop1.services.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Tag(name = "Post", description = "Post API")
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -19,6 +22,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    @PreAuthorize("hasAuthority('POST_READ')")
     @GetMapping("")
     public Page<Post>  getPosts(@RequestParam(required = false, defaultValue = "0") int page,
                                 @RequestParam(required = false, defaultValue = "10") int size,
@@ -35,6 +39,7 @@ public class PostController {
         return postService.getPost(id);
     }
 
+    @PreAuthorize("hasAuthority('POST_READ') && hasAuthority('POST_ADD')")
     @PostMapping
     public ResponseEntity<Post> addPost(@RequestBody Post post) {
         postService.addPost(post);

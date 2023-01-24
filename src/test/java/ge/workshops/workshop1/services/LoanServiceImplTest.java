@@ -14,13 +14,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -45,21 +45,21 @@ class LoanServiceImplTest {
 
     @Test
     public void testLoanRegister() {
-
         var custerDto = new LoanRegistrationDto.Customer(
                 "01010101010", "John", "Doe", LocalDate.of(1990, 1, 1));
         var loanDto = new LoanRegistrationDto.Loan("123456789", 1000.0, 12, 12.0);
         var collateralDto = new LoanRegistrationDto.Collateral(Collateral.CollateralType.HOUSE, 1000.0);
         var loanRegistrationDto = new LoanRegistrationDto(loanDto, custerDto, List.of(collateralDto));
 
+        //Loan loan2 = new Loan(loanDto, username);
+        //when(loanRepository.save(loan2)).thenReturn(loan2);
 
-        Loan loan2 = new Loan(loanDto);
-        when(loanRepository.save(loan2)).thenReturn(loan2);
-
-        var loan = loanServiceImpl.register(loanRegistrationDto);
+        var loan = loanServiceImpl.register(loanRegistrationDto, "vano");
         assertNotNull(loan);
         assertEquals(loanDto.getAmount(), loan.getAmount());
         assertNotNull(loan.getCustomer());
+        assertEquals(loan.getCreatedBy(), "vano");
+        assertEquals(loan.getUpdatedBy(), "vano");
 
         verify(loanRepository, times(1)).save(loan);
         verify(customerRepository, times(1)).save(any(Customer.class));
@@ -77,7 +77,7 @@ class LoanServiceImplTest {
         var collateralDto = new LoanRegistrationDto.Collateral(Collateral.CollateralType.HOUSE, 1000.0);
         var loanRegistrationDto = new LoanRegistrationDto(loanDto, custerDto, List.of(collateralDto));
 
-        assertThrows(IllegalArgumentException.class, () -> loanServiceImpl.register(loanRegistrationDto));
+        assertThrows(IllegalArgumentException.class, () -> loanServiceImpl.register(loanRegistrationDto, "vano"));
 
     }
 
@@ -90,9 +90,8 @@ class LoanServiceImplTest {
         var collateralDto = new LoanRegistrationDto.Collateral(Collateral.CollateralType.HOUSE, 1000.0);
         var loanRegistrationDto = new LoanRegistrationDto(loanDto, custerDto, List.of(collateralDto));
 
-        loanServiceImpl.register(loanRegistrationDto);
+        loanServiceImpl.register(loanRegistrationDto, "vano");
         //assertThrows(IllegalArgumentException.class, () -> loanServiceImpl.register(loanRegistrationDto));
-
     }
 
     @Test

@@ -17,9 +17,11 @@ import java.time.LocalDateTime;
 @SequenceGenerator(name = "collateralIdGenerator", sequenceName = "collateral_id_seq", allocationSize = 1)
 public class Collateral {
 
-    public Collateral(LoanRegistrationDto.Collateral dto) {
+    public Collateral(LoanRegistrationDto.Collateral dto, String username) {
         this.type = dto.getType();
         this.value = dto.getValue();
+        this.createdBy = username;
+        this.updatedBy = username;
     }
 
     public enum CollateralType {
@@ -30,14 +32,18 @@ public class Collateral {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "collateralIdGenerator")
     private int id;
-    @Column(name = "type", nullable = false)
+    @Column(name = "coll_type", nullable = false)
     private  CollateralType type;
-    @Column(name = "value")
+    @Column(name = "coll_value")
     private Double value;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String  createdBy;
+    @Column(name = "updated_by", nullable = false, updatable = false)
+    private String updatedBy;
 
     @JsonIgnore
     @ManyToOne

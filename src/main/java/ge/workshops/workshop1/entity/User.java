@@ -1,9 +1,11 @@
 package ge.workshops.workshop1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,6 +28,7 @@ public class User {
     @Column(name = "id")
     private int id;
 
+    @Schema(description = "asdfadf asdf asdf asdf")
     @Column(name = "user_name")
     private String userName;
 

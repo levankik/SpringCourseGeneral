@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestEntityManager
 @Transactional
 @SpringBootTest
+
 class Workshop1ApplicationTests {
 
     @Autowired
@@ -46,6 +48,7 @@ class Workshop1ApplicationTests {
     }
 
     @Test
+    @WithMockUser(value = "vano", authorities = {"POST_READ"})
     void testSearchingPosts () throws Exception {
         var user = new User("username", "password", "email");
         em.persistAndFlush(user);
@@ -67,7 +70,25 @@ class Workshop1ApplicationTests {
     }
 
     @Test
-    void AddingPosts () throws Exception {
+    @WithMockUser("vano")
+    void testSearchingPosts_whith_no_authority () throws Exception {
+        mockMvc.perform(get("/posts")
+                        .param("size", "5")
+                        .param("page", "0"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void testSearchingPosts_whith_no_user () throws Exception {
+        mockMvc.perform(get("/posts")
+                        .param("size", "5")
+                        .param("page", "0"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(value = "vano", authorities = {"POST_READ", "POST_ADD"})
+    void testAddingPosts () throws Exception {
                 var user = new User("username", "password", "email");
                 var post = new Post("title", "body", user);
                 var body = objectMapper.writeValueAsString(post);
@@ -82,5 +103,17 @@ class Workshop1ApplicationTests {
                 Query query = em.getEntityManager().createQuery("select p from Post p");
                 List <Post> posts = query.getResultList();
                 Assertions.assertEquals(1, posts.size());
+    }
+
+    @Test
+    @WithMockUser(value = "vano", authorities = {"POST_READ"})
+    void testAddingPosts_with_no_post_add_authority () throws Exception {
+        var user = new User("username", "password", "email");
+        var post = new Post("title", "body", user);
+        var body = objectMapper.writeValueAsString(post);
+        mockMvc.perform(post("/posts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isForbidden());
     }
 }

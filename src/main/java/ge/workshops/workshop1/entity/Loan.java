@@ -17,7 +17,7 @@ import java.util.List;
 @SequenceGenerator(name = "loanIdGenerator", sequenceName = "loan_id_seq", allocationSize = 1)
 public class Loan {
 
-    public Loan(LoanRegistrationDto.Loan dto) {
+    public Loan(LoanRegistrationDto.Loan dto, String username) {
         if(dto == null) {
             throw new IllegalArgumentException("loan is null");
         }
@@ -25,6 +25,8 @@ public class Loan {
         this.interestRate = dto.getInterestRate();
         this.loanNumber = dto.getLoanNumber();
         this.term = dto.getTerm();
+        this.createdBy = username;
+        this.updatedBy = username;
     }
 
     @Id
@@ -44,6 +46,11 @@ public class Loan {
     private String loanNumber;
     @Column(name = "term")
     private int term;
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String  createdBy;
+    @Column(name = "updated_by", nullable = false, updatable = false)
+    private String updatedBy;
+
 
 
 

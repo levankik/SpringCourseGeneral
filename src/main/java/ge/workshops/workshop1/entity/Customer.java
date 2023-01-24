@@ -1,6 +1,7 @@
 package ge.workshops.workshop1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.workshops.workshop1.config.SecUser;
 import ge.workshops.workshop1.dto.LoanRegistrationDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,15 @@ import java.util.List;
 @SequenceGenerator(name = "customerIdGenerator", sequenceName = "customers_id_seq", allocationSize = 1)
 public class Customer {
 
-    public Customer(LoanRegistrationDto.Customer dto) {
+    public Customer(LoanRegistrationDto.Customer dto, String username) {
         this.privateNumber = dto.getPrivateNumber();
         this.firstName = dto.getFirstName();
         this.lastName = dto.getLastName();
         this.birthDate = dto.getBirthDate();
+        this.createdBy = username;
+        this.updatedBy = username;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerIdGenerator")
     private  Integer id;
@@ -40,6 +44,10 @@ public class Customer {
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String  createdBy;
+    @Column(name = "updated_by", nullable = false, updatable = false)
+    private String updatedBy;
 
     @JsonIgnore
     @OneToMany (mappedBy = "customer", fetch = FetchType.EAGER)

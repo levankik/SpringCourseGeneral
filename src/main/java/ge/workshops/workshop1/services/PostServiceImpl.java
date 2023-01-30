@@ -46,7 +46,6 @@ public class PostServiceImpl implements PostService {
     //@Value("${my.custom.property}")
    // private String customProperty;
 
-
     @Value("${jsonplaceholder.username")
     private String username;
 
@@ -102,7 +101,7 @@ public class PostServiceImpl implements PostService {
     @Transactional(rollbackFor = Throwable.class)
     public Post addPost(Post post) {
         post.setId(null);
-        if(post.getUser().getId() != 0) {
+        if(post.getUser().getId() != null) { // აქ ადრე მეწერა != 0, ალბათ არასწორად
             log.debug("creating new user: " + post.getUser().getUserName());
             userService.addUser(post.getUser());
         }

@@ -16,11 +16,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
                 description = "Spring Boot Tutorial API"
         )
 )
+
 @EnableScheduling
 @EnableAsync
+
 @EnableConfigurationProperties({
         JSONPlaceholderProperties.class
 })
+
 @SpringBootApplication
 public class  Workshop1Application {
     public  static void main(String[] args) {

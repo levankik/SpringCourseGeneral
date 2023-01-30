@@ -33,10 +33,8 @@ public class LoanServiceImpl implements LoanService {
     @Override
     @Transactional
     public Loan register(LoanRegistrationDto loanRegistrationDto, String  username) {
+
         var customerDto = loanRegistrationDto.getCustomer();
-        if(customerDto.getPrivateNumber() == null) {
-            throw new IllegalArgumentException("Private number is required");
-        }
         var customer = new Customer(customerDto, username);
         customerRepository.save(customer);
 
@@ -46,19 +44,9 @@ public class LoanServiceImpl implements LoanService {
         loanRepository.save(loan);
 
         var collateralDtos = loanRegistrationDto.getCollaterals();
-
-        if(customerDto.getPrivateNumber() == null) {
-            throw new IllegalArgumentException("Customer not found");
-        }
-
-        if(loanDto.getLoanNumber() == null) {
-            throw new IllegalArgumentException("loan not found");
-        }
-
         for (var collateralDto: collateralDtos){
             var collateral = new Collateral(collateralDto, username);
             collateral.setLoan(loan);
-
             collateralRepository.save(collateral);
         }
 

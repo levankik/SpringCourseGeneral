@@ -41,8 +41,6 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-
-
     @PrePersist
     public void prePersist() {
         createDate = LocalDateTime.now();

@@ -7,6 +7,7 @@ import ge.workshops.workshop1.entity.Post;
 import ge.workshops.workshop1.entity.User;
 import ge.workshops.workshop1.exceptions.NotFoundException;
 import ge.workshops.workshop1.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.criteria.Join;
@@ -27,6 +29,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
@@ -47,13 +50,6 @@ public class PostServiceImpl implements PostService {
     @Value("${jsonplaceholder.username")
     private String username;
 
-    public PostServiceImpl(PostRepository postRepository,
-                           UserService userService, RestTemplateBuilder restTemplateBuilder, JSONPlaceholderProperties jsonPlaceholderProperties) {
-        this.postRepository = postRepository;
-        this.userService = userService;
-        this.restTemplateBuilder = restTemplateBuilder;
-        this.jsonPlaceholderProperties = jsonPlaceholderProperties;
-    }
 
     @Override
     //@Transactional(readOnly = true)

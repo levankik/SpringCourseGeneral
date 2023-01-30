@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
     List<User> getUsers();
     User getUserById(int id);
-    User getUserByUserName(String userName);
+    User getUserByUserName(String userName);// UserServiceImpl-ში არის ამ სახელის მეთOდი
     User  addUser(User user);
 }

@@ -51,8 +51,12 @@ public class Loan {
     @Column(name = "updated_by", nullable = false, updatable = false)
     private String updatedBy;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
-
+    @OneToMany (mappedBy = "loan")
+    private List<Collateral> collaterals;
 
     @PrePersist
     public void prePersist() {
@@ -61,13 +65,4 @@ public class Loan {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
-
-
-    @OneToMany (mappedBy = "loan")
-    private List<Collateral> collaterals;
-
 }

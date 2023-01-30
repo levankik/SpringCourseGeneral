@@ -3,7 +3,6 @@ package ge.workshops.workshop1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ge.workshops.workshop1.entity.Post;
 import ge.workshops.workshop1.entity.User;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -66,12 +65,12 @@ class Workshop1ApplicationTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content.length()", equalTo(5)))
                 .andExpect(jsonPath("$.first", is(true)))
-                .andExpect(jsonPath("$.content[0].createDate", matchesPattern(".+")));
+                .andExpect(jsonPath("$.content[0].createDate", matchesPattern(".*")));
     }
 
     @Test
     @WithMockUser("vano")
-    void testSearchingPosts_whith_no_authority () throws Exception {
+    void testSearchingPosts_with_no_authority () throws Exception {
         mockMvc.perform(get("/posts")
                         .param("size", "5")
                         .param("page", "0"))
@@ -79,7 +78,7 @@ class Workshop1ApplicationTests {
     }
 
     @Test
-    void testSearchingPosts_whith_no_user () throws Exception {
+    void testSearchingPosts_with_no_user () throws Exception {
         mockMvc.perform(get("/posts")
                         .param("size", "5")
                         .param("page", "0"))
@@ -88,10 +87,11 @@ class Workshop1ApplicationTests {
 
     @Test
     @WithMockUser(value = "vano", authorities = {"POST_READ", "POST_ADD"})
-    void testAddingPosts () throws Exception {
+    void testAddingPosts() throws Exception {
                 var user = new User("username", "password", "email");
                 var post = new Post("title", "body", user);
                 var body = objectMapper.writeValueAsString(post);
+
                 mockMvc.perform(post("/posts")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(body))
@@ -101,7 +101,7 @@ class Workshop1ApplicationTests {
                 .andExpect(jsonPath("$.id", not(nullValue())));
 
                 Query query = em.getEntityManager().createQuery("select p from Post p");
-                List <Post> posts = query.getResultList();
+                List<Post> posts = query.getResultList();
                 Assertions.assertEquals(1, posts.size());
     }
 

@@ -42,7 +42,7 @@ public class PostController {
     @PreAuthorize("hasAuthority('POST_READ') && hasAuthority('POST_ADD')")
     @PostMapping
     public ResponseEntity<Post> addPost(@RequestBody Post post) {
-        postService.addPost(post);
+        post = postService.addPost(post);
         var location = UriComponentsBuilder.fromPath("/posts/" + post.getId()).build().toUri();
         return ResponseEntity.created(location).body(post);
     }

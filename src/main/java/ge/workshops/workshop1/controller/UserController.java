@@ -11,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PrePersist;
 import java.util.List;
 
 @RestController
@@ -33,7 +32,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User  getUser(@PathVariable int id)  {
-        System.out.println(passwordEncoder.encode("nata"));
+        System.out.println(passwordEncoder.encode("vano"));
         return userService.getUserById(id);
     }
 

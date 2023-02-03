@@ -4,7 +4,6 @@ import ge.workshops.workshop1.config.SecUser;
 import ge.workshops.workshop1.dto.LoanRegistrationDto;
 import ge.workshops.workshop1.entity.Loan;
 import ge.workshops.workshop1.services.LoanService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

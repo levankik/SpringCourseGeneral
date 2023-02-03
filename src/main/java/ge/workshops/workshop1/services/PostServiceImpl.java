@@ -20,7 +20,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.criteria.Join;
@@ -48,7 +47,6 @@ public class PostServiceImpl implements PostService {
 
     @Value("${jsonplaceholder.username")
     private String username;
-
 
     @Override
     //@Transactional(readOnly = true)
@@ -101,7 +99,8 @@ public class PostServiceImpl implements PostService {
     @Transactional(rollbackFor = Throwable.class)
     public Post addPost(Post post) {
         post.setId(null);
-        if(post.getUser().getId() != null) { // აქ ადრე მეწერა != 0, ალბათ არასწორად
+        if(post.getUser().getId() == null) { // აქ ადრე მეწერა != 0, ალბათ არასწორად.
+            // ლოგიკურად = null უნდა იყოს, ლექცია 17, წუთი 51
             log.debug("creating new user: " + post.getUser().getUserName());
             userService.addUser(post.getUser());
         }

@@ -1,7 +1,6 @@
 package ge.workshops.workshop1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ge.workshops.workshop1.config.SecUser;
 import ge.workshops.workshop1.dto.LoanRegistrationDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

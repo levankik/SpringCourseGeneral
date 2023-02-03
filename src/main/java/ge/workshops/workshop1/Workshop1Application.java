@@ -19,7 +19,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @EnableAsync
-
 @EnableConfigurationProperties({
         JSONPlaceholderProperties.class
 })
